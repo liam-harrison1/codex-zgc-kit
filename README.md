@@ -38,6 +38,12 @@ codex
 curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install.sh | bash
 ```
 
+If GitHub is blocked but the Mac Cloudflare file mirror is still alive:
+
+```bash
+curl -L https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit/install.sh | BASE_URL=https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit bash
+```
+
 If local keys are missing, restore the encrypted secret bundle:
 
 ```bash

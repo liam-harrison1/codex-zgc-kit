@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BASE_URL="https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main"
+BASE_URL="${BASE_URL:-https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main}"
 SHA256="ed3bc2ed8ceb1e670653a7dfa289fc8591b38e7714e81afaae49b49fb967b93a"
 
 mkdir -p "$HOME/codex-files"
