@@ -8,6 +8,12 @@ Ubuntu one-line installer for the training machine.
 curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install.sh | bash
 ```
 
+If local keys are missing, restore the encrypted secret bundle:
+
+```bash
+curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-secrets.sh | bash -s -- PASSWORD
+```
+
 ## Use
 
 Main route:
@@ -30,7 +36,7 @@ codex
 
 This repository intentionally does not contain API keys, activation codes, `auth.json`, or `sub2api-key`.
 
-If `codex-use-capi` says `~/.codex/auth.json` is missing, create it locally on the Ubuntu machine:
+If `codex-use-capi` says `~/.codex/auth.json` is missing, either restore the encrypted secret bundle above, or create it locally on the Ubuntu machine:
 
 ```bash
 mkdir -p ~/.codex
@@ -40,4 +46,4 @@ EOF
 chmod 600 ~/.codex/auth.json
 ```
 
-If `codex-use-sub2api` says `~/.codex/sub2api-key` is missing, the backup key must be restored locally on the Ubuntu machine.
+If `codex-use-sub2api` says `~/.codex/sub2api-key` is missing, restore the encrypted secret bundle above.
