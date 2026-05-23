@@ -1,14 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-KEY_FILE="$HOME/.codex/ccvibe-key"
+KEY_FILE="$HOME/.claude/ccvibe-key"
+LEGACY_KEY_FILE="$HOME/.codex/ccvibe-key"
 SETTINGS_DIR="$HOME/.claude"
 SETTINGS_FILE="$SETTINGS_DIR/settings.json"
 
 if [ ! -s "$KEY_FILE" ]; then
-  echo "ERROR: $KEY_FILE not found."
-  echo "Run install-secrets.sh first to restore the encrypted ccvibe key."
-  exit 1
+  if [ -s "$LEGACY_KEY_FILE" ]; then
+    KEY_FILE="$LEGACY_KEY_FILE"
+  else
+    echo "ERROR: $KEY_FILE not found."
+    echo "Run install-ccvibe-secret.sh first to restore the encrypted ccvibe key."
+    exit 1
+  fi
 fi
 
 mkdir -p "$SETTINGS_DIR"

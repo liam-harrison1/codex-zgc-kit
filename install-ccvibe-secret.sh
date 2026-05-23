@@ -13,7 +13,7 @@ if [ -z "$PASS" ]; then
   printf "\n"
 fi
 
-mkdir -p "$HOME/.codex"
+mkdir -p "$HOME/.claude"
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 
@@ -32,6 +32,6 @@ openssl enc -d -aes-256-cbc -pbkdf2 -iter 100000 \
   -pass "pass:$PASS"
 
 tar -xzf "$tmp/codex-secrets.tar.gz" -C "$tmp"
-install -m 600 "$tmp/codex-secrets/ccvibe-key" "$HOME/.codex/ccvibe-key"
+install -m 600 "$tmp/codex-secrets/ccvibe-key" "$HOME/.claude/ccvibe-key"
 
-echo "OK: installed ~/.codex/ccvibe-key only"
+echo "OK: installed ~/.claude/ccvibe-key only; Codex was not modified"

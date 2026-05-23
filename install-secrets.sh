@@ -25,7 +25,11 @@ if [ -z "$PASS" ]; then
   printf "\n"
 fi
 
-mkdir -p "$HOME/.codex"
+if [ "$MODE" = "all" ]; then
+  mkdir -p "$HOME/.codex" "$HOME/.claude"
+else
+  mkdir -p "$HOME/.claude"
+fi
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 
@@ -49,10 +53,10 @@ if [ "$MODE" = "all" ]; then
   install -m 600 "$tmp/codex-secrets/sub2api-key" "$HOME/.codex/sub2api-key"
   install -m 600 "$tmp/codex-secrets/devpn-sub-url" "$HOME/.codex/devpn-sub-url"
 fi
-install -m 600 "$tmp/codex-secrets/ccvibe-key" "$HOME/.codex/ccvibe-key"
+install -m 600 "$tmp/codex-secrets/ccvibe-key" "$HOME/.claude/ccvibe-key"
 
 if [ "$MODE" = "all" ]; then
-  echo "OK: installed ~/.codex/auth.json, ~/.codex/sub2api-key, ~/.codex/ccvibe-key, and ~/.codex/devpn-sub-url"
+  echo "OK: installed ~/.codex/auth.json, ~/.codex/sub2api-key, ~/.codex/devpn-sub-url, and ~/.claude/ccvibe-key"
 else
-  echo "OK: installed ~/.codex/ccvibe-key only"
+  echo "OK: installed ~/.claude/ccvibe-key only; Codex was not modified"
 fi
