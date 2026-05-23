@@ -13,7 +13,7 @@ if [ -z "$PASS" ]; then
   printf "\n"
 fi
 
-mkdir -p "$HOME/.codex"
+mkdir -p "$HOME/.config/devpn"
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 
@@ -32,6 +32,6 @@ openssl enc -d -aes-256-cbc -pbkdf2 -iter 100000 \
   -pass "pass:$PASS"
 
 tar -xzf "$tmp/codex-secrets.tar.gz" -C "$tmp"
-install -m 600 "$tmp/codex-secrets/devpn-sub-url" "$HOME/.codex/devpn-sub-url"
+install -m 600 "$tmp/codex-secrets/devpn-sub-url" "$HOME/.config/devpn/sub-url"
 
-echo "OK: installed ~/.codex/devpn-sub-url only"
+echo "OK: installed ~/.config/devpn/sub-url only; Codex was not modified"

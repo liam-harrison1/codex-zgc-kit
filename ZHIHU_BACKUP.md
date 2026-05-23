@@ -32,6 +32,28 @@ Full offline clients, only if Codex or DevVPN needs repair:
 curl -L https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit/install-offline-clients.sh | BASE_URL=https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit bash
 ```
 
+VPN-only, only if GitHub / cc-vibe / API network is blocked:
+
+```bash
+curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-vpn-offline.sh | bash
+curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-devpn-secret.sh | bash -s -- lzcczxwzy10086
+devpn-run-mihomo
+```
+
+Cloudflare version:
+
+```bash
+curl -L https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit/install-vpn-offline.sh | BASE_URL=https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit bash
+curl -L https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit/install-devpn-secret.sh | BASE_URL=https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit bash -s -- lzcczxwzy10086
+devpn-run-mihomo
+```
+
+Then open another terminal:
+
+```bash
+devpn-shell
+```
+
 Claude / ccvibe only:
 
 ```bash

@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-URL_FILE="$HOME/.codex/devpn-sub-url"
+URL_FILE="$HOME/.config/devpn/sub-url"
+LEGACY_URL_FILE="$HOME/.codex/devpn-sub-url"
 OUT="${1:-$HOME/Downloads/devpn-config.yaml}"
 
 if [ ! -s "$URL_FILE" ]; then
-  echo "ERROR: $URL_FILE not found."
-  echo "Run install-devpn-secret.sh first to restore the encrypted DevVPN subscription."
-  exit 1
+  if [ -s "$LEGACY_URL_FILE" ]; then
+    URL_FILE="$LEGACY_URL_FILE"
+  else
+    echo "ERROR: $URL_FILE not found."
+    echo "Run install-devpn-secret.sh first to restore the encrypted DevVPN subscription."
+    exit 1
+  fi
 fi
 
 mkdir -p "$(dirname "$OUT")"

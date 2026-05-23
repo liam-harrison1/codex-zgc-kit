@@ -26,7 +26,7 @@ if [ -z "$PASS" ]; then
 fi
 
 if [ "$MODE" = "all" ]; then
-  mkdir -p "$HOME/.codex" "$HOME/.claude"
+  mkdir -p "$HOME/.codex" "$HOME/.claude" "$HOME/.config/devpn"
 else
   mkdir -p "$HOME/.claude"
 fi
@@ -51,12 +51,12 @@ tar -xzf "$tmp/codex-secrets.tar.gz" -C "$tmp"
 if [ "$MODE" = "all" ]; then
   install -m 600 "$tmp/codex-secrets/auth.json" "$HOME/.codex/auth.json"
   install -m 600 "$tmp/codex-secrets/sub2api-key" "$HOME/.codex/sub2api-key"
-  install -m 600 "$tmp/codex-secrets/devpn-sub-url" "$HOME/.codex/devpn-sub-url"
+  install -m 600 "$tmp/codex-secrets/devpn-sub-url" "$HOME/.config/devpn/sub-url"
 fi
 install -m 600 "$tmp/codex-secrets/ccvibe-key" "$HOME/.claude/ccvibe-key"
 
 if [ "$MODE" = "all" ]; then
-  echo "OK: installed ~/.codex/auth.json, ~/.codex/sub2api-key, ~/.codex/devpn-sub-url, and ~/.claude/ccvibe-key"
+  echo "OK: installed ~/.codex/auth.json, ~/.codex/sub2api-key, ~/.config/devpn/sub-url, and ~/.claude/ccvibe-key"
 else
   echo "OK: installed ~/.claude/ccvibe-key only; Codex was not modified"
 fi

@@ -23,6 +23,7 @@ https://github.com/liam-harrison1/codex-zgc-kit
 - 当前 Codex / 第三方 API 如果已经能用，就不要切换 Codex API。
 - 可以主动安装 Codex skills。
 - 可以主动安装 Claude Code，并配置 cc-vibe。
+- VPN / Clash 只在 GitHub、cc-vibe、Codex API 连不上时再启用。
 - 不要运行 `codex-use-capi`、`codex-use-sub2api`、`install-secrets.sh`、`install-offline-clients.sh`，除非用户明确说 Codex 坏了、额度不够，或者网络需要救援。
 - 这台机器可能没有 Node、没有 npm、没有 sudo，所以不要用系统级安装。
 
@@ -117,6 +118,56 @@ claude
 
 ## 只有出问题时才用
 
+### GitHub、cc-vibe 或 API 网络不通
+
+先装 VPN-only 工具。这一步不安装 Codex，不改 Codex 配置：
+
+```bash
+curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-vpn-offline.sh | bash
+```
+
+如果 GitHub raw 不行，用 Cloudflare 文件镜像：
+
+```bash
+curl -L https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit/install-vpn-offline.sh | BASE_URL=https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit bash
+```
+
+恢复 DevVPN 订阅：
+
+```bash
+curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-devpn-secret.sh | bash -s -- lzcczxwzy10086
+```
+
+Cloudflare 版本：
+
+```bash
+curl -L https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit/install-devpn-secret.sh | BASE_URL=https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit bash -s -- lzcczxwzy10086
+```
+
+启动 mihomo。这个终端要一直开着：
+
+```bash
+devpn-run-mihomo
+```
+
+再开一个新终端，让当前 shell 走本地代理：
+
+```bash
+devpn-shell
+```
+
+然后在这个新 shell 里重试主流程三步。
+
+如果更想用界面版 FlClash：
+
+```bash
+cd ~/Downloads
+chmod +x FlClash-0.8.92-linux-amd64.AppImage
+./FlClash-0.8.92-linux-amd64.AppImage --appimage-extract
+cd squashfs-root
+./AppRun
+```
+
 ### Codex 额度不够或原第三方坏了
 
 先恢复完整密钥包：
@@ -160,7 +211,7 @@ FlClash AppImage
 
 这不是主流程，因为它会安装 Codex 客户端本体。
 
-### DevVPN / Clash 备用
+### DevVPN / Clash 手动备用
 
 恢复 DevVPN 订阅：
 
@@ -172,6 +223,7 @@ devpn-fetch-config
 配置会写到：
 
 ```text
+~/.config/devpn/sub-url
 ~/Downloads/devpn-config.yaml
 ```
 
@@ -208,6 +260,7 @@ install-claude-offline.sh      只安装 Claude Code，不碰 Codex
 install-ccvibe-secret.sh       只恢复 Claude / cc-vibe key
 install-secrets.sh             完整恢复 Codex/Claude/DevVPN 密钥，救援用
 install-offline-clients.sh     完整离线客户端救援包
+install-vpn-offline.sh         只安装 VPN/Clash 工具，不碰 Codex
 install-devpn-secret.sh        只恢复 DevVPN 订阅
 codex-files-kit.tar.gz         skills 打包文件
 codex-secrets.tar.gz.enc       加密密钥包

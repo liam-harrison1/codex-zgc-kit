@@ -5,6 +5,10 @@ BASE_URL="${BASE_URL:-https://raw.githubusercontent.com/liam-harrison1/codex-zgc
 WORK="$HOME/zgc-offline-clients"
 BIN="$HOME/.local/bin"
 DOWNLOADS="$HOME/Downloads"
+MIHOMO_PACKAGE="mihomo-linux-amd64-compatible-v1.19.25.gz"
+MIHOMO_SHA256="8d14bf2edbf2911db004abaed12754d63041eaf87e565af6f1e589883cd93ec8"
+FLCLASH_PACKAGE="FlClash-0.8.92-linux-amd64.AppImage"
+FLCLASH_SHA256="8f3743fe8980449329f31f8d4fbfa08b8b8be0180796ca68935dfaa9458e2f7d"
 
 mkdir -p "$WORK" "$BIN" "$DOWNLOADS"
 export PATH="$BIN:$PATH"
@@ -26,30 +30,15 @@ fetch() {
   printf '%s  %s\n' "$sha" "$out" | sha256sum -c -
 }
 
-fetch "openai-codex-0.130.0-linux-x64.tgz" "91e12a56c49c702c86c5c42811cfa3d515b6d6bc196d70ba9cea25227302aa8f"
-fetch "claude-code-linux-x64-2.1.150.tgz" "980c2d6157a8325c6a93dd838c92987cb80dc7f1815c4b03fccf5da136101fa6"
-fetch "mihomo-linux-amd64-compatible-v1.19.25.gz" "8d14bf2edbf2911db004abaed12754d63041eaf87e565af6f1e589883cd93ec8"
-fetch "FlClash-0.8.92-linux-amd64.AppImage" "8f3743fe8980449329f31f8d4fbfa08b8b8be0180796ca68935dfaa9458e2f7d"
-
-echo "Installing Codex CLI..."
-rm -rf "$WORK/openai-codex"
-mkdir -p "$WORK/openai-codex"
-tar -xzf "$WORK/openai-codex-0.130.0-linux-x64.tgz" -C "$WORK/openai-codex"
-chmod +x "$WORK/openai-codex/package/vendor/x86_64-unknown-linux-musl/codex/codex"
-ln -sf "$WORK/openai-codex/package/vendor/x86_64-unknown-linux-musl/codex/codex" "$BIN/codex"
-
-echo "Installing Claude Code..."
-rm -rf "$WORK/claude-code"
-mkdir -p "$WORK/claude-code"
-tar -xzf "$WORK/claude-code-linux-x64-2.1.150.tgz" -C "$WORK/claude-code"
-install -m 755 "$WORK/claude-code/package/claude" "$BIN/claude"
+fetch "$MIHOMO_PACKAGE" "$MIHOMO_SHA256"
+fetch "$FLCLASH_PACKAGE" "$FLCLASH_SHA256"
 
 echo "Installing mihomo..."
-gzip -dc "$WORK/mihomo-linux-amd64-compatible-v1.19.25.gz" > "$BIN/mihomo"
+gzip -dc "$WORK/$MIHOMO_PACKAGE" > "$BIN/mihomo"
 chmod +x "$BIN/mihomo"
 
 echo "Installing FlClash AppImage..."
-install -m 755 "$WORK/FlClash-0.8.92-linux-amd64.AppImage" "$DOWNLOADS/FlClash-0.8.92-linux-amd64.AppImage"
+install -m 755 "$WORK/$FLCLASH_PACKAGE" "$DOWNLOADS/$FLCLASH_PACKAGE"
 
 curl -fL --retry 3 --connect-timeout 10 --max-time 60 \
   "$BASE_URL/devpn-fetch-config.sh" \
@@ -82,16 +71,12 @@ EOF
 chmod +x "$BIN/devpn-shell"
 
 echo
-echo "OK: offline clients installed."
+echo "OK: VPN tools installed without touching Codex."
 echo "Installed commands:"
-echo "  codex"
-echo "  claude"
 echo "  mihomo"
 echo "  devpn-fetch-config"
 echo "  devpn-run-mihomo"
 echo "  devpn-shell"
 echo
 echo "FlClash AppImage:"
-echo "  $DOWNLOADS/FlClash-0.8.92-linux-amd64.AppImage"
-echo
-echo "No sudo or system node/npm is required for these installed binaries."
+echo "  $DOWNLOADS/$FLCLASH_PACKAGE"
