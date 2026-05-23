@@ -2,6 +2,36 @@
 
 Ubuntu one-line installer for the training machine.
 
+## Tomorrow Plan
+
+Use Claude Code / Cloud through ccvibe first. Keep Codex on its original route unless it needs repair.
+
+1. Download the files kit:
+
+```bash
+curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install.sh | bash
+```
+
+2. Restore local keys if this is a fresh Ubuntu machine:
+
+```bash
+curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-secrets.sh | bash -s -- lzcczxwzy10086
+```
+
+3. Configure Claude Code / Cloud through ccvibe:
+
+```bash
+claude-use-ccvibe
+claude
+```
+
+4. Leave Codex alone if it already works. Only repair Codex if needed:
+
+```bash
+codex-test
+codex
+```
+
 ## Install
 
 ```bash
@@ -16,7 +46,14 @@ curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/inst
 
 ## Use
 
-Main route:
+Claude Code / Cloud route through ccvibe:
+
+```bash
+claude-use-ccvibe
+claude
+```
+
+Codex original/main route, only if Codex needs repair:
 
 ```bash
 codex-use-capi
@@ -30,13 +67,6 @@ Backup route through Mac + Cloudflare + sub2api:
 codex-use-sub2api
 codex-test
 codex
-```
-
-Claude Code route through ccvibe:
-
-```bash
-claude-use-ccvibe
-claude
 ```
 
 ## Notes
