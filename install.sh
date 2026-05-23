@@ -20,7 +20,14 @@ rm -rf codex-files-kit
 tar -xzf codex-files-kit.tar.gz
 bash codex-files-kit/install.sh
 
+mkdir -p "$HOME/.local/bin"
+curl -fL --retry 3 --connect-timeout 10 --max-time 60 \
+  "$BASE_URL/claude-use-ccvibe.sh" \
+  -o "$HOME/.local/bin/claude-use-ccvibe"
+chmod +x "$HOME/.local/bin/claude-use-ccvibe"
+
 echo
 echo "Done. Try:"
 echo "  codex-use-capi"
 echo "  codex-test"
+echo "  claude-use-ccvibe"

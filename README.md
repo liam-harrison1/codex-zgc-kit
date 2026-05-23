@@ -32,9 +32,16 @@ codex-test
 codex
 ```
 
+Claude Code route through ccvibe:
+
+```bash
+claude-use-ccvibe
+claude
+```
+
 ## Notes
 
-This repository intentionally does not contain API keys, activation codes, `auth.json`, or `sub2api-key`.
+This repository intentionally does not contain plaintext API keys, activation codes, `auth.json`, `sub2api-key`, or `ccvibe-key`.
 
 If `codex-use-capi` says `~/.codex/auth.json` is missing, either restore the encrypted secret bundle above, or create it locally on the Ubuntu machine:
 

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 BASE_URL="https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main"
-SHA256="8253bff1285e578a4c41719bca159ed72617aefd711315530ff996616f948efa"
+SHA256="3e8fcfb65a9ccb2a69276f5f01b1e058da199ee9b7dc57a3786328a25d8b6293"
 PASS="${1:-}"
 
 if [ -z "$PASS" ]; then
@@ -34,5 +34,8 @@ openssl enc -d -aes-256-cbc -pbkdf2 -iter 100000 \
 tar -xzf "$tmp/codex-secrets.tar.gz" -C "$tmp"
 install -m 600 "$tmp/codex-secrets/auth.json" "$HOME/.codex/auth.json"
 install -m 600 "$tmp/codex-secrets/sub2api-key" "$HOME/.codex/sub2api-key"
+if [ -f "$tmp/codex-secrets/ccvibe-key" ]; then
+  install -m 600 "$tmp/codex-secrets/ccvibe-key" "$HOME/.codex/ccvibe-key"
+fi
 
-echo "OK: installed ~/.codex/auth.json and ~/.codex/sub2api-key"
+echo "OK: installed ~/.codex/auth.json, ~/.codex/sub2api-key, and ~/.codex/ccvibe-key"
