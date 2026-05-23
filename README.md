@@ -1,0 +1,43 @@
+# Codex ZGC Kit
+
+Ubuntu one-line installer for the training machine.
+
+## Install
+
+```bash
+curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install.sh | bash
+```
+
+## Use
+
+Main route:
+
+```bash
+codex-use-capi
+codex-test
+codex
+```
+
+Backup route through Mac + Cloudflare + sub2api:
+
+```bash
+codex-use-sub2api
+codex-test
+codex
+```
+
+## Notes
+
+This repository intentionally does not contain API keys, activation codes, `auth.json`, or `sub2api-key`.
+
+If `codex-use-capi` says `~/.codex/auth.json` is missing, create it locally on the Ubuntu machine:
+
+```bash
+mkdir -p ~/.codex
+cat > ~/.codex/auth.json <<'EOF'
+{"OPENAI_API_KEY":"PASTE_ACTIVATION_CODE_HERE"}
+EOF
+chmod 600 ~/.codex/auth.json
+```
+
+If `codex-use-sub2api` says `~/.codex/sub2api-key` is missing, the backup key must be restored locally on the Ubuntu machine.
