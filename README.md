@@ -44,6 +44,20 @@ If GitHub is blocked but the Mac Cloudflare file mirror is still alive:
 curl -L https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit/install.sh | BASE_URL=https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit bash
 ```
 
+If the Ubuntu machine has no Node.js, no npm command, and no sudo, install offline clients:
+
+```bash
+curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-offline-clients.sh | bash
+```
+
+Cloudflare mirror version:
+
+```bash
+curl -L https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit/install-offline-clients.sh | BASE_URL=https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit bash
+```
+
+This installs `codex`, `claude`, `mihomo`, `devpn-run-mihomo`, and `~/Downloads/FlClash-0.8.92-linux-amd64.AppImage` under the user account.
+
 If local keys are missing, restore the encrypted secret bundle:
 
 ```bash
