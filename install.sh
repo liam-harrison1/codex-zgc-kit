@@ -28,6 +28,5 @@ chmod +x "$HOME/.local/bin/claude-use-ccvibe"
 
 echo
 echo "Done. Try:"
-echo "  codex-use-capi"
-echo "  codex-test"
 echo "  claude-use-ccvibe"
+echo "  codex-test"

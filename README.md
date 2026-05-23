@@ -12,10 +12,10 @@ Use Claude Code / Cloud through ccvibe first. Keep Codex on its original route u
 curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install.sh | bash
 ```
 
-2. Restore local keys if this is a fresh Ubuntu machine:
+2. Restore only the Claude / ccvibe key if this is a fresh Ubuntu machine:
 
 ```bash
-curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-secrets.sh | bash -s -- lzcczxwzy10086
+curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-secrets.sh | bash -s -- --ccvibe-only lzcczxwzy10086
 ```
 
 3. Configure Claude Code / Cloud through ccvibe:
@@ -42,6 +42,12 @@ If local keys are missing, restore the encrypted secret bundle:
 
 ```bash
 curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-secrets.sh | bash -s -- lzcczxwzy10086
+```
+
+To restore only the Claude / ccvibe key and leave Codex untouched:
+
+```bash
+curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-secrets.sh | bash -s -- --ccvibe-only lzcczxwzy10086
 ```
 
 ## Use
@@ -84,3 +90,5 @@ chmod 600 ~/.codex/auth.json
 ```
 
 If `codex-use-sub2api` says `~/.codex/sub2api-key` is missing, restore the encrypted secret bundle above.
+
+If `claude-use-ccvibe` says `~/.codex/ccvibe-key` is missing, restore only the Claude / ccvibe key with `--ccvibe-only`.
