@@ -2,6 +2,8 @@
 
 Main plan: keep Codex API untouched, but install Codex skills and helpers:
 
+No phone tomorrow means: do not depend on ChatGPT web login, passkey, email verification, or SMS verification. Use the local Codex CLI path first.
+
 ```bash
 curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install.sh | bash
 curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-claude-offline.sh | bash

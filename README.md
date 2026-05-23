@@ -24,6 +24,7 @@ https://github.com/liam-harrison1/codex-zgc-kit
 - 可以主动安装 Codex skills。
 - 可以主动安装 Claude Code，并配置 cc-vibe。
 - VPN / Clash 只在 GitHub、cc-vibe、Codex API 连不上时再启用。
+- 明天没有手机时，不要依赖 ChatGPT 网页登录、passkey、邮箱/短信二次验证；主线只走本机 Codex CLI 和这里的脚本。
 - 不要运行 `codex-use-capi`、`codex-use-sub2api`、`install-secrets.sh`、`install-offline-clients.sh`，除非用户明确说 Codex 坏了、额度不够，或者网络需要救援。
 - 这台机器可能没有 Node、没有 npm、没有 sudo，所以不要用系统级安装。
 
