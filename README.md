@@ -101,6 +101,239 @@ claude
 
 如果 `codex-test` 能返回 `OK`，说明 Codex 仍然可用。
 
+## 明天现场操作顺序
+
+如果不知道先做什么，按这个顺序走：
+
+```text
+1. 先确认当前 Ubuntu 环境
+2. 打开 Codex CLI，确认 Codex 能回答
+3. 读取这个 README，只执行主流程三步
+4. 如果有开发机，先用 SSHDEV 连上开发机
+5. 在开发机上确认代码目录、任务要求、运行命令
+6. 让 Codex/Claude 先读题和列计划，再让它改代码或跑实验
+```
+
+现场第一组检查命令：
+
+```bash
+pwd
+whoami
+hostname
+uname -a
+date
+echo "$SHELL"
+echo "$PATH"
+```
+
+如果 Codex 已经能用，先让它读这个仓库：
+
+```bash
+codex
+```
+
+然后对 Codex 说：
+
+```text
+请打开 GitHub 上 liam-harrison1/codex-zgc-kit，读取 README。
+只按主流程三步做。不要改 Codex API，除非我明确说 Codex 坏了或额度不够。
+现场没有 sudo、可能没有 Node/npm、没有手机验证。
+```
+
+## SSHDEV 连接开发机
+
+实训环境里如果要求用 `SSHDEV` 或 `sshdev` 连接开发机，先探测真实命令：
+
+```bash
+type sshdev || type SSHDEV
+sshdev --help || SSHDEV --help
+```
+
+如果出现菜单或帮助信息，按老师给的开发机名称、队伍编号、任务编号选择。常见形式可能是：
+
+```bash
+sshdev
+sshdev <开发机名称>
+SSHDEV
+SSHDEV <开发机名称>
+```
+
+连接成功后立刻确认自己已经在开发机里：
+
+```bash
+hostname
+whoami
+pwd
+ls -la
+```
+
+如果 `sshdev` 提示 `command not found`，不要用 `apt install`，因为没有 sudo。直接问现场老师或助教：
+
+```text
+请问连接开发机的命令、开发机名称、账号路径分别是什么？
+这台 Ubuntu 没有 sudo，所以需要使用实训环境已经提供的连接方式。
+```
+
+如果 SSHDEV 卡住或断开：
+
+```bash
+ping -c 3 github.com
+ssh -V
+env | grep -i proxy
+```
+
+如果开发机里不能访问 GitHub，但本机 Ubuntu 可以访问 GitHub，就先在本机完成 README 主流程；如果本机也不通，再看本文的 VPN-only 救援。
+
+## 科研实训做题流程
+
+拿到题目后，不要先乱改文件。先让 Codex/Claude 做这几件事：
+
+```text
+请先读题和当前目录，输出：
+1. 任务目标
+2. 输入、输出、评分方式
+3. 需要运行的命令
+4. 不能碰的文件
+5. 最小可行计划
+在我确认前不要大改代码。
+```
+
+进入项目后先看这些：
+
+```bash
+pwd
+ls -la
+find . -maxdepth 2 -type f | head -80
+git status 2>/dev/null || true
+README_FILES=$(find . -maxdepth 3 -iname "README*" -o -iname "*.md" | head -20)
+echo "$README_FILES"
+```
+
+如果是 Python 项目：
+
+```bash
+python3 --version
+python3 -m pip --version 2>/dev/null || true
+find . -maxdepth 3 -type f \( -name "requirements.txt" -o -name "pyproject.toml" -o -name "environment.yml" \)
+```
+
+没有 sudo 时，优先用用户目录或虚拟环境：
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+python3 -m pip install -r requirements.txt
+```
+
+如果没有网络或依赖装不上，先不要硬装。让 Codex 检查已有环境：
+
+```bash
+python3 - <<'PY'
+import sys
+mods = ["numpy", "pandas", "torch", "sklearn", "matplotlib"]
+for m in mods:
+    try:
+        mod = __import__(m)
+        print(m, getattr(mod, "__version__", "ok"))
+    except Exception as e:
+        print(m, "missing")
+PY
+```
+
+做修改前先保存现场状态：
+
+```bash
+git status 2>/dev/null || true
+cp -a important_file important_file.bak 2>/dev/null || true
+```
+
+每次让 AI 改完后都要跑验证命令。没有明确测试时，至少跑：
+
+```bash
+python3 -m compileall . 2>/dev/null || true
+git diff 2>/dev/null || true
+```
+
+## Linux 常用命令速查
+
+目录和文件：
+
+```bash
+pwd                         # 当前目录
+ls -la                      # 看文件
+cd 路径                     # 进入目录
+cd ..                       # 返回上级
+mkdir -p dir                # 创建目录
+cp 源 目标                  # 复制文件
+cp -a 源目录 目标目录       # 复制目录
+mv 旧名 新名                # 移动或改名
+rm -i 文件                  # 删除前询问
+du -sh .                    # 当前目录大小
+df -h                       # 磁盘空间
+```
+
+查看内容：
+
+```bash
+cat file                    # 直接输出
+less file                   # 分页查看，按 q 退出
+head -40 file               # 前 40 行
+tail -40 file               # 后 40 行
+tail -f log.txt             # 持续看日志
+```
+
+搜索：
+
+```bash
+rg "关键词" .               # 推荐，最快
+grep -R "关键词" .          # 没有 rg 时用
+find . -name "*.py"         # 找文件
+find . -maxdepth 2 -type f  # 看浅层文件
+```
+
+编辑：
+
+```bash
+nano file                   # 简单编辑器，Ctrl+O 保存，Ctrl+X 退出
+vim file                    # 如果会 vim 再用
+```
+
+进程和网络：
+
+```bash
+ps aux | head
+ps aux | grep 关键词
+kill PID
+curl -I https://github.com
+curl -L URL -o file
+```
+
+Git：
+
+```bash
+git status
+git diff
+git log --oneline -5
+git clone URL
+git pull
+```
+
+压缩包：
+
+```bash
+tar -tzf file.tar.gz        # 查看压缩包内容
+tar -xzf file.tar.gz        # 解压
+tar -czf out.tar.gz dir     # 打包
+```
+
+环境变量：
+
+```bash
+echo "$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+env | sort | less
+```
+
 ## 如果 GitHub raw 下载失败
 
 如果 GitHub 页面能打开，但 `raw.githubusercontent.com` 下载失败，直接用 Cloudflare 文件镜像，不要现场排查网络。
