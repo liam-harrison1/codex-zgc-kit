@@ -4,28 +4,34 @@ Ubuntu one-line installer for the training machine.
 
 ## Tomorrow Plan
 
-Keep the existing Codex route untouched if it already works. Install Claude Code / Cloud through ccvibe only to improve speed and add a second working lane.
+Keep the existing Codex API route untouched if it already works. Installing Codex skills is allowed; switching Codex providers is only for rescue.
 
-1. Install Claude only. This does not install or overwrite Codex:
+1. Install Codex skills and helper scripts. This does not switch Codex API providers:
+
+```bash
+curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install.sh | bash
+```
+
+2. Install Claude only. This does not install or overwrite Codex:
 
 ```bash
 curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-claude-offline.sh | bash
 ```
 
-2. Restore only the Claude / ccvibe key. This writes `~/.claude/ccvibe-key`, not Codex config:
+3. Restore only the Claude / ccvibe key. This writes `~/.claude/ccvibe-key`, not Codex config:
 
 ```bash
 curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-ccvibe-secret.sh | bash -s -- lzcczxwzy10086
 ```
 
-3. Configure Claude Code / Cloud through ccvibe:
+4. Configure Claude Code / Cloud through ccvibe:
 
 ```bash
 claude-use-ccvibe
 claude
 ```
 
-4. Leave Codex alone if it already works. Only repair Codex if needed.
+5. Leave Codex provider config alone if it already works. Only repair Codex if needed.
 
 ```bash
 codex-test
@@ -43,6 +49,8 @@ If GitHub is blocked but the Mac Cloudflare file mirror is still alive:
 ```bash
 curl -L https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit/install.sh | BASE_URL=https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit bash
 ```
+
+This installs `~/.codex/skills` and helper scripts such as `codex-test`, `codex-use-capi`, and `codex-use-sub2api`. It does not run the provider switch commands.
 
 If the Ubuntu machine has no Node.js, no npm command, and no sudo, install Claude only:
 
