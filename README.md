@@ -14,6 +14,13 @@ liam-harrison1/codex-zgc-kit
 https://github.com/liam-harrison1/codex-zgc-kit
 ```
 
+明天任务要求摘录：
+
+```text
+docs/task-requirements.md
+assets/task-requirements-2026-05-23.jpg
+```
+
 ## 给明天 Codex / Claude 看的话
 
 请读取这个 README，然后只按“主流程三步”执行。
@@ -25,6 +32,7 @@ https://github.com/liam-harrison1/codex-zgc-kit
 - 可以主动安装 Claude Code，并配置 cc-vibe。
 - VPN / Clash 只在 GitHub、cc-vibe、Codex API 连不上时再启用。
 - 明天没有手机时，不要依赖 ChatGPT 网页登录、passkey、邮箱/短信二次验证；主线只走本机 Codex CLI 和这里的脚本。
+- 官方考试说明里写的是使用 `ssh dev` 进入开发机；优先用这个命令。
 - 不要运行 `codex-use-capi`、`codex-use-sub2api`、`install-secrets.sh`、`install-offline-clients.sh`，除非用户明确说 Codex 坏了、额度不够，或者网络需要救援。
 - 这台机器可能没有 Node、没有 npm、没有 sudo，所以不要用系统级安装。
 
@@ -109,7 +117,7 @@ claude
 1. 先确认当前 Ubuntu 环境
 2. 打开 Codex CLI，确认 Codex 能回答
 3. 读取这个 README，只执行主流程三步
-4. 如果有开发机，先用 SSHDEV 连上开发机
+4. 如果有开发机，先用 `ssh dev` 连上开发机
 5. 在开发机上确认代码目录、任务要求、运行命令
 6. 让 Codex/Claude 先读题和列计划，再让它改代码或跑实验
 ```
@@ -138,11 +146,24 @@ codex
 请打开 GitHub 上 liam-harrison1/codex-zgc-kit，读取 README。
 只按主流程三步做。不要改 Codex API，除非我明确说 Codex 坏了或额度不够。
 现场没有 sudo、可能没有 Node/npm、没有手机验证。
+再读取 docs/task-requirements.md，按里面的考试要求处理 ssh dev、/vepfs-readonly/ 和 /vepfs/。
 ```
 
-## SSHDEV 连接开发机
+## ssh dev / SSHDEV 连接开发机
 
-实训环境里如果要求用 `SSHDEV` 或 `sshdev` 连接开发机，先探测真实命令：
+官方考试说明写的是：
+
+```bash
+ssh dev
+```
+
+所以现场优先执行：
+
+```bash
+ssh dev
+```
+
+如果 `ssh dev` 不行，再探测是否有学校封装命令：
 
 ```bash
 type sshdev || type SSHDEV
@@ -183,6 +204,35 @@ env | grep -i proxy
 ```
 
 如果开发机里不能访问 GitHub，但本机 Ubuntu 可以访问 GitHub，就先在本机完成 README 主流程；如果本机也不通，再看本文的 VPN-only 救援。
+
+## 官方任务目录要求
+
+考试说明原图和文字摘录在：
+
+```text
+docs/task-requirements.md
+assets/task-requirements-2026-05-23.jpg
+```
+
+进入开发机后，优先确认：
+
+```bash
+ls -la /vepfs-readonly/
+ls -la /vepfs/
+```
+
+题目文件是只读的，先复制到本地工作目录：
+
+```bash
+mkdir -p ~/zgc-work
+cp -a /vepfs-readonly/problem1 ~/zgc-work/
+cp -a /vepfs-readonly/problem2 ~/zgc-work/
+cp -a /vepfs-readonly/problem3 ~/zgc-work/
+cp -a /vepfs-readonly/problem4 ~/zgc-work/
+cd ~/zgc-work
+```
+
+`/vepfs/` 是可写专属目录，用于保存代码、checkpoint、数据和最终提交文件。每道题都要先读题目里的“提交内容”部分，再把评分需要的文件放到 `/vepfs/`。
 
 ## 科研实训做题流程
 
