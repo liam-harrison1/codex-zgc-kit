@@ -1,99 +1,131 @@
-# Codex ZGC Kit
+# ZGC Ubuntu Emergency Kit
 
-Ubuntu one-line installer for the training machine.
+给中关村实训 Ubuntu 机器用的应急安装包。
 
-## Tomorrow Plan
+准确仓库名：
 
-Keep the existing Codex API route untouched if it already works. Installing Codex skills is allowed; switching Codex providers is only for rescue.
+```text
+liam-harrison1/codex-zgc-kit
+```
 
-1. Install Codex skills and helper scripts. This does not switch Codex API providers:
+仓库地址：
+
+```text
+https://github.com/liam-harrison1/codex-zgc-kit
+```
+
+## 给明天 Codex / Claude 看的话
+
+请读取这个 README，然后只按“主流程三步”执行。
+
+重要规则：
+
+- 当前 Codex / 第三方 API 如果已经能用，就不要切换 Codex API。
+- 可以主动安装 Codex skills。
+- 可以主动安装 Claude Code，并配置 cc-vibe。
+- 不要运行 `codex-use-capi`、`codex-use-sub2api`、`install-secrets.sh`、`install-offline-clients.sh`，除非用户明确说 Codex 坏了、额度不够，或者网络需要救援。
+- 这台机器可能没有 Node、没有 npm、没有 sudo，所以不要用系统级安装。
+
+## 主流程三步
+
+### 1. 安装 Codex skills 和辅助命令
 
 ```bash
 curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install.sh | bash
 ```
 
-2. Install Claude only. This does not install or overwrite Codex:
+这一步会安装：
+
+```text
+~/.codex/skills
+codex-test
+codex-use-capi
+codex-use-sub2api
+claude-use-ccvibe
+devpn-fetch-config
+```
+
+这一步不会切换 Codex API，不会自动运行 `codex-use-capi` 或 `codex-use-sub2api`。
+
+### 2. 安装 Claude Code 本体
 
 ```bash
 curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-claude-offline.sh | bash
 ```
 
-3. Restore only the Claude / ccvibe key. This writes `~/.claude/ccvibe-key`, not Codex config:
+这一步只安装：
+
+```text
+~/.local/bin/claude
+~/.local/bin/claude-use-ccvibe
+```
+
+它不需要 sudo，不需要 Node/npm，也不会覆盖 Codex。
+
+### 3. 恢复 cc-vibe key，并启动 Claude
 
 ```bash
 curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-ccvibe-secret.sh | bash -s -- lzcczxwzy10086
-```
-
-4. Configure Claude Code / Cloud through ccvibe:
-
-```bash
 claude-use-ccvibe
 claude
 ```
 
-5. Leave Codex provider config alone if it already works. Only repair Codex if needed.
+这一步只写入 Claude 相关配置：
+
+```text
+~/.claude/ccvibe-key
+~/.claude/settings.json
+```
+
+它不会写 `~/.codex/config.toml`，不会改 Codex API。
+
+## 成功标准
+
+主流程完成后，应该满足：
+
+```text
+Codex 原来的第三方配置仍然保留
+Codex skills 已安装
+claude 命令可用
+Claude 走 cc-vibe
+```
+
+可以检查：
 
 ```bash
 codex-test
-codex
+claude
 ```
 
-## Install
+如果 `codex-test` 能返回 `OK`，说明 Codex 仍然可用。
 
-```bash
-curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install.sh | bash
-```
+## 如果 GitHub raw 下载失败
 
-If GitHub is blocked but the Mac Cloudflare file mirror is still alive:
+如果 GitHub 页面能打开，但 `raw.githubusercontent.com` 下载失败，直接用 Cloudflare 文件镜像，不要现场排查网络。
+
+Cloudflare 主流程三步：
 
 ```bash
 curl -L https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit/install.sh | BASE_URL=https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit bash
-```
-
-This installs `~/.codex/skills` and helper scripts such as `codex-test`, `codex-use-capi`, and `codex-use-sub2api`. It does not run the provider switch commands.
-
-If the Ubuntu machine has no Node.js, no npm command, and no sudo, install Claude only:
-
-```bash
-curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-claude-offline.sh | bash
-```
-
-Cloudflare mirror version:
-
-```bash
 curl -L https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit/install-claude-offline.sh | BASE_URL=https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit bash
+curl -L https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit/install-ccvibe-secret.sh | BASE_URL=https://separately-she-market-printing.trycloudflare.com/codex-zgc-kit bash -s -- lzcczxwzy10086
+claude-use-ccvibe
+claude
 ```
 
-This installs `claude` and `claude-use-ccvibe` under the user account. It does not touch `codex` or `~/.codex/config.toml`.
+这里的 Cloudflare 只是文件下载镜像，不是 Codex API 切换。
 
-Full offline rescue, only if Codex or DevVPN also needs repair:
+## 只有出问题时才用
 
-```bash
-curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-offline-clients.sh | bash
-```
+### Codex 额度不够或原第三方坏了
 
-Full secret restore, only when Codex or DevVPN also needs repair:
+先恢复完整密钥包：
 
 ```bash
 curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-secrets.sh | bash -s -- lzcczxwzy10086
 ```
 
-To restore only the Claude / ccvibe key and leave Codex untouched:
-
-```bash
-curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-ccvibe-secret.sh | bash -s -- lzcczxwzy10086
-```
-
-## Use
-
-Claude Code / Cloud route through ccvibe:
-
-```bash
-claude-use-ccvibe
-claude
-```
-
-Codex original/main route, only if Codex needs repair:
+切回 capi：
 
 ```bash
 codex-use-capi
@@ -101,7 +133,7 @@ codex-test
 codex
 ```
 
-Backup route through Mac + Cloudflare + sub2api:
+如果 capi 也不行，再切 Mac + Cloudflare + sub2api：
 
 ```bash
 codex-use-sub2api
@@ -109,16 +141,43 @@ codex-test
 codex
 ```
 
-DevVPN backup route:
+### 需要完整离线客户端救援
+
+只有在 Codex/Claude/DevVPN 客户端本体都缺失，且现场没有 Node/npm/sudo 时，才运行：
+
+```bash
+curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-offline-clients.sh | bash
+```
+
+它会安装：
+
+```text
+codex
+claude
+mihomo
+FlClash AppImage
+```
+
+这不是主流程，因为它会安装 Codex 客户端本体。
+
+### DevVPN / Clash 备用
+
+恢复 DevVPN 订阅：
 
 ```bash
 curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-devpn-secret.sh | bash -s -- lzcczxwzy10086
 devpn-fetch-config
 ```
 
-This writes a Clash config to `~/Downloads/devpn-config.yaml`.
+配置会写到：
 
-If you downloaded `FlClash-0.8.92-linux-amd64.AppImage`, this no-sudo launch path is worth trying:
+```text
+~/Downloads/devpn-config.yaml
+```
+
+无 sudo 机器上尽量不要用 TUN 模式，优先用普通 HTTP/SOCKS 代理。
+
+如果 FlClash AppImage 不能直接打开，可以尝试：
 
 ```bash
 cd ~/Downloads
@@ -128,24 +187,36 @@ cd squashfs-root
 ./AppRun
 ```
 
-Import `~/Downloads/devpn-config.yaml` or paste the restored subscription URL from `~/.codex/devpn-sub-url`. Avoid TUN mode on no-sudo machines; use normal system proxy or app-level proxy settings.
+## 不要做的事
 
-## Notes
-
-This repository intentionally does not contain plaintext API keys, activation codes, `auth.json`, `sub2api-key`, `ccvibe-key`, or `devpn-sub-url`.
-
-If `codex-use-capi` says `~/.codex/auth.json` is missing, either restore the encrypted secret bundle above, or create it locally on the Ubuntu machine:
+不要在主流程里运行：
 
 ```bash
-mkdir -p ~/.codex
-cat > ~/.codex/auth.json <<'EOF'
-{"OPENAI_API_KEY":"PASTE_ACTIVATION_CODE_HERE"}
-EOF
-chmod 600 ~/.codex/auth.json
+codex-use-capi
+codex-use-sub2api
+install-secrets.sh
+install-offline-clients.sh
 ```
 
-If `codex-use-sub2api` says `~/.codex/sub2api-key` is missing, restore the encrypted secret bundle above.
+这些都是救援命令，不是默认安装命令。
 
-If `claude-use-ccvibe` says `~/.claude/ccvibe-key` is missing, restore only the Claude / ccvibe key with `install-ccvibe-secret.sh`.
+## 文件说明
 
-If `devpn-fetch-config` says `~/.codex/devpn-sub-url` is missing, restore only the DevVPN subscription with `install-devpn-secret.sh`.
+```text
+install.sh                    安装 Codex skills 和辅助命令
+install-claude-offline.sh      只安装 Claude Code，不碰 Codex
+install-ccvibe-secret.sh       只恢复 Claude / cc-vibe key
+install-secrets.sh             完整恢复 Codex/Claude/DevVPN 密钥，救援用
+install-offline-clients.sh     完整离线客户端救援包
+install-devpn-secret.sh        只恢复 DevVPN 订阅
+codex-files-kit.tar.gz         skills 打包文件
+codex-secrets.tar.gz.enc       加密密钥包
+```
+
+## 备注
+
+这个仓库不存明文 API key。密钥在 `codex-secrets.tar.gz.enc` 中，加密密码是：
+
+```text
+lzcczxwzy10086
+```
