@@ -25,13 +25,13 @@ curl -fL --retry 3 --connect-timeout 10 --max-time 120 \
 echo "[2/3] Verifying encrypted package..."
 printf '%s  %s\n' "$SHA256" "$tmp/codex-secrets.tar.gz.enc" | sha256sum -c -
 
-echo "[3/3] Decrypting and installing ccvibe key only..."
+echo "[3/3] Decrypting and installing DevVPN subscription only..."
 openssl enc -d -aes-256-cbc -pbkdf2 -iter 100000 \
   -in "$tmp/codex-secrets.tar.gz.enc" \
   -out "$tmp/codex-secrets.tar.gz" \
   -pass "pass:$PASS"
 
 tar -xzf "$tmp/codex-secrets.tar.gz" -C "$tmp"
-install -m 600 "$tmp/codex-secrets/ccvibe-key" "$HOME/.codex/ccvibe-key"
+install -m 600 "$tmp/codex-secrets/devpn-sub-url" "$HOME/.codex/devpn-sub-url"
 
-echo "OK: installed ~/.codex/ccvibe-key only"
+echo "OK: installed ~/.codex/devpn-sub-url only"

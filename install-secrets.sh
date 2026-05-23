@@ -2,7 +2,7 @@
 set -euo pipefail
 
 BASE_URL="https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main"
-SHA256="3e8fcfb65a9ccb2a69276f5f01b1e058da199ee9b7dc57a3786328a25d8b6293"
+SHA256="c04dfaeb1ef0c28df4d4533105757f59e289e89df26d611b33617ef34f848f11"
 MODE="all"
 PASS=""
 
@@ -47,11 +47,12 @@ tar -xzf "$tmp/codex-secrets.tar.gz" -C "$tmp"
 if [ "$MODE" = "all" ]; then
   install -m 600 "$tmp/codex-secrets/auth.json" "$HOME/.codex/auth.json"
   install -m 600 "$tmp/codex-secrets/sub2api-key" "$HOME/.codex/sub2api-key"
+  install -m 600 "$tmp/codex-secrets/devpn-sub-url" "$HOME/.codex/devpn-sub-url"
 fi
 install -m 600 "$tmp/codex-secrets/ccvibe-key" "$HOME/.codex/ccvibe-key"
 
 if [ "$MODE" = "all" ]; then
-  echo "OK: installed ~/.codex/auth.json, ~/.codex/sub2api-key, and ~/.codex/ccvibe-key"
+  echo "OK: installed ~/.codex/auth.json, ~/.codex/sub2api-key, ~/.codex/ccvibe-key, and ~/.codex/devpn-sub-url"
 else
   echo "OK: installed ~/.codex/ccvibe-key only"
 fi

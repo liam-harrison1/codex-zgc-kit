@@ -75,9 +75,30 @@ codex-test
 codex
 ```
 
+DevVPN backup route:
+
+```bash
+curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-devpn-secret.sh | bash -s -- lzcczxwzy10086
+devpn-fetch-config
+```
+
+This writes a Clash config to `~/Downloads/devpn-config.yaml`.
+
+If you downloaded `FlClash-0.8.92-linux-amd64.AppImage`, this no-sudo launch path is worth trying:
+
+```bash
+cd ~/Downloads
+chmod +x FlClash-0.8.92-linux-amd64.AppImage
+./FlClash-0.8.92-linux-amd64.AppImage --appimage-extract
+cd squashfs-root
+./AppRun
+```
+
+Import `~/Downloads/devpn-config.yaml` or paste the restored subscription URL from `~/.codex/devpn-sub-url`. Avoid TUN mode on no-sudo machines; use normal system proxy or app-level proxy settings.
+
 ## Notes
 
-This repository intentionally does not contain plaintext API keys, activation codes, `auth.json`, `sub2api-key`, or `ccvibe-key`.
+This repository intentionally does not contain plaintext API keys, activation codes, `auth.json`, `sub2api-key`, `ccvibe-key`, or `devpn-sub-url`.
 
 If `codex-use-capi` says `~/.codex/auth.json` is missing, either restore the encrypted secret bundle above, or create it locally on the Ubuntu machine:
 
@@ -92,3 +113,5 @@ chmod 600 ~/.codex/auth.json
 If `codex-use-sub2api` says `~/.codex/sub2api-key` is missing, restore the encrypted secret bundle above.
 
 If `claude-use-ccvibe` says `~/.codex/ccvibe-key` is missing, restore only the Claude / ccvibe key with `install-ccvibe-secret.sh`.
+
+If `devpn-fetch-config` says `~/.codex/devpn-sub-url` is missing, restore only the DevVPN subscription with `install-devpn-secret.sh`.

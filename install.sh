@@ -25,8 +25,13 @@ curl -fL --retry 3 --connect-timeout 10 --max-time 60 \
   "$BASE_URL/claude-use-ccvibe.sh" \
   -o "$HOME/.local/bin/claude-use-ccvibe"
 chmod +x "$HOME/.local/bin/claude-use-ccvibe"
+curl -fL --retry 3 --connect-timeout 10 --max-time 60 \
+  "$BASE_URL/devpn-fetch-config.sh" \
+  -o "$HOME/.local/bin/devpn-fetch-config"
+chmod +x "$HOME/.local/bin/devpn-fetch-config"
 
 echo
 echo "Done. Try:"
 echo "  claude-use-ccvibe"
+echo "  devpn-fetch-config"
 echo "  codex-test"
