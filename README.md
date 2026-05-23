@@ -11,7 +11,7 @@ curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/inst
 If local keys are missing, restore the encrypted secret bundle:
 
 ```bash
-curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-secrets.sh | bash -s -- PASSWORD
+curl -L https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main/install-secrets.sh | bash -s -- lzcczxwzy10086
 ```
 
 ## Use

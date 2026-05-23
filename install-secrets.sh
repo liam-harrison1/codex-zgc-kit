@@ -2,7 +2,7 @@
 set -euo pipefail
 
 BASE_URL="https://raw.githubusercontent.com/liam-harrison1/codex-zgc-kit/main"
-SHA256="730eec1f719c7cbeb73750c4552e17ff7d4bac9f7f9009ad60dfb4673e7919d5"
+SHA256="8253bff1285e578a4c41719bca159ed72617aefd711315530ff996616f948efa"
 PASS="${1:-}"
 
 if [ -z "$PASS" ]; then
