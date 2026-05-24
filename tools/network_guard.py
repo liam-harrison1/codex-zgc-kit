@@ -180,6 +180,10 @@ def main():
     before, port_results = best_proxy_latency()
     switch = maybe_switch(before)
     after, _ = best_proxy_latency()
+    second_switch = None
+    if not after or after["ms"] > THRESHOLD_MS:
+        second_switch = maybe_switch(after)
+        after, _ = best_proxy_latency()
     file_cf = curl_timing(CLOUDFLARE_FILE, head=True)
     sub_cf = curl_timing(CLOUDFLARE_SUB2API, head=True)
 
@@ -189,6 +193,8 @@ def main():
     else:
         print(f"before_proxy unavailable results={port_results}")
     print("switch=" + json.dumps(switch, ensure_ascii=False))
+    if second_switch:
+        print("second_switch=" + json.dumps(second_switch, ensure_ascii=False))
     if after:
         print(f"after_proxy port={after['port']} http={after['http']} ms={after['ms']} ok400={after['ms'] <= THRESHOLD_MS}")
     else:
